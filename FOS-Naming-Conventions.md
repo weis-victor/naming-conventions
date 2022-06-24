@@ -232,7 +232,7 @@ In the below specifications, I've tried to stick to the above principles as much
 > E.g. You might have both `corp_df` and `guest_df`
 
 ### Data Leak Prevention (DLP)
-- Name: `<use-case>_ac`
+- Name: `<use-case>_dlp`
 > E.g. You might have both `pci_dlp` and `pii_dlp`
 
 ### Application Control:
