@@ -7,7 +7,7 @@ FortiOS is object-oriented, by design. Whereas some other firewall systems allow
 
 When an administrator is used to working in literals, they will sometimes try to circumvent the object-oriented nature of FortiOS by naming their objects by their literal value. Imagine an IP address object whose value is 192.168.1.0/24. If you name this object `192.168.1.0_24`, then you've added no semantic value to the object, which does nothing to aid in human-readability. Instead, if you name that object `users_subnet`, now administrators know that this subnet is where users reside. Some administrators will claim that they want to "see" the actual IP address value of their objects, but every object in the FortiOS GUI can be hovered over to display its content, which will show the IP address. Furthermore, the various search functions within the FortiOS GUI allow you to search by both object names and object values, so it is easy to find objects when you know their values rather than their names.
 
-Objects are also much more flexible and dynamic. For example: If an administrator could choose to use literal values for an IP address that is used in a static route, a firewall policy, and an IPsec Security Association (aka "Phase-2 Selector"), any changes to that IP address would have to be done in three places. But if the an object is used instead of a literals, the administrator would only need to change the IP address value of that object, and the change will be reflected everywhere else that that object is used in the configuration.
+Objects are also much more flexible and dynamic. For example: If an administrator could choose to use literal values for an IP address that is used in a static route, a firewall policy, and an IPsec Security Association (aka "Phase-2 Selector"), any changes to that IP address would have to be done in three places. But if the an object is used instead of a literal, the administrator would only need to change the IP address value of that object, and the change will be reflected everywhere else that that object is used in the configuration.
 
 There are a few places where FortiOS allows administrators to choose between literals vs objects. These include static routes and IPsec Security Association (aka "Phase-2 Selector"). Use of literals here should be avoided, for the above stated reasons.
 
@@ -92,7 +92,7 @@ In the below specifications, I've tried to stick to the above principles as much
 
 ### VLAN Interfaces:
 - Name: ``<base-interface>``.VVVV, where ``<base-interface>`` is the base interface of which this VLAN interface is sub-interface, and VVVV is the 4-digit VLAN ID according to 802.1q
-- Alias: ``<use-case>_vlan`
+- Alias: ``<use-case>_vlan``
 	> E.g.
 	> - `po1.0002` might have an alias for `inf_vlan` (where inf means infrastructure, such as servers and management IPs of network infrastructure)
 	> - `po1.0003` might have an alias of `user_vlan` (where corporate users will reside)
@@ -105,11 +105,11 @@ In the below specifications, I've tried to stick to the above principles as much
 
 ### SSID Interfaces:
 - Name: `ssidN`, where `N` is the number of SSID interface, which increments from 1
-- Alias: ``<use-case>_ssid`, where use case is what this SSID will be used for
+- Alias: ``<use-case>_ssid``, where use case is what this SSID will be used for
 > E.g. `ssid1` might have an alias of `corp_ssid`, and `ssid2` might have an alias of `guest_ssid`
 
 ### IPsec VPN Phase-1 Interfaces
-- Name: ``<use-case>_tun1`, where "tun" means "tunnel" and number is the number of the tunnel that increments from 1
+- Name: ``<use-case>_tun1``, where "tun" means "tunnel" and number is the number of the tunnel that increments from 1
 - Alias: As of FortiOS 6.4, IPsec VPN Phase-1 Interfaces cannot have aliases, which is why the use-case is in the name instead, so the use-case name must be relatively short/abbreviated
 
 ### Zones:
@@ -164,7 +164,7 @@ In the below specifications, I've tried to stick to the above principles as much
 	> E.g. `web01.example.com-ssh_vip` for port 22 and `web01.example.com-http_vip` for port 80
 
 ### Address Group Objects
-- Name: <fqdn | use-case>_<object-type>s, where the "s" indicates plurality, hence a group of multiple objects
+- Name: `<fqdn | use-case>_<object-type>s`, where the "s" indicates plurality, hence a group of multiple objects
 	> E.g. 
 	> - `company-asn_subnets` might contain all of the subnets for the company's ASN such as company-asn_subnet01 and company-asn_subnet02
 	> - `ban_geos` might include all of the Geo IP objects that you want to block, such china_geo and iran_geo
@@ -306,7 +306,7 @@ N.B. Because DDoS policies cannot be applied to SD-WAN zones, if you have multip
 - N.B. I almost never use Traffic Shapers anymore after Traffic Shaping Profiles were introduced in FOS 6.4.
 - This is because Traffic Shaping Profiles are much more dynamic, since they can use bandwidth percentages, which are crucial in SD-WAN configurations, where wan1 and wan2 often have different upload/download bandwidth values. Using static Traffic Shapers, you would need different Shapers for wan1 and wan2, and maybe even for wan1-upload, wan1-download, wan2-upload, wan2-download if they have asymetric bandwidth. Using static Traffic Shapers in a such a scenario could exponentially increase the number of objects you have to create and manage, whereas a Traffic Shaping Profiles can handle all of that complexity in a single object.
 - Furthermore, imagine a scenario where wan1 initially has a subscribbed bandwidth of 100x10, but then you have your ISP upgrade your subscribbed bandwindth to 200x20. If you used static Traffic Shapers, you would have to go through and edit all of your Traffic Shaper objects relevant to wan1 and double their max/guarntee values in order to actually realize your bandwidth upgrade. But if you used a Traffic Shaping Profile instead, the only change you would have to make would be to edit the Estimated Bandwidth values on the `wan1` interface object, which will allow the Traffic Shaping Profile to re-calculate the appropriate percentages.
-- The only exception to this rule would be if you need to enforce a specific static bandwidth max/guarantee for a certain traffic flow. An example use-case for such a need would be ISP who is using FortiGates as their CPE. Such an ISP might have a contract to deliver exactly 100 Mbps x 100 Mbps to their customer. In this case, a static Traffic Shaper is required.
+- The only exception to this rule would be if you need to enforce a specific static bandwidth max/guarantee for a certain traffic flow. An example use-case for such a need would be an ISP who is using FortiGates as their CPE. Such an ISP might have a contract to deliver exactly 100 Mbps x 100 Mbps to their customer. In this case, a static Traffic Shaper is required.
 - Name: `<use-case>_shaper`
 	> E.g. `acme-subscribbed_shaper` would enforce the subscribbed bandwidth for ACME Corp, who is an ISP customer 
 
@@ -423,7 +423,7 @@ FortiAP Profiles
 ### Action
 - Name: `<use-case>_<action-type>`
 > E.g. 
-> - For a script that cycles POE to revive a down AP, you might have `poe-cycle-ap01_script
+> - For a script that cycles POE to revive a down AP, you might have `poe-cycle-ap01_script`
 > - For an email that alerts on loss of FortiAnalyzer connectivity, you might have `fgt-faz-conncection-lost_email`
 
 ### Stitch
