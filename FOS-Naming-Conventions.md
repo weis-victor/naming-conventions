@@ -295,7 +295,7 @@ N.B. Because DDoS policies cannot be applied to SD-WAN zones, if you have multip
 ## Traffic Shaping
 
 ### Traffic Shaping Profiles
-- Name: `<use-case>_shaping-profile`
+- Name: `<use-case>_shaping-prof`
 - N.B. Class ID names should be equal to the FortiGuard Application Categories, one Class ID per Category
 
 ### Traffic Shaping Policies
