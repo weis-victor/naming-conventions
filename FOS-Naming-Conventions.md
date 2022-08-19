@@ -131,9 +131,9 @@ In the below specifications, I've tried to stick to the above principles as much
 
 ### Subnet Objects:
 - For a /32 in the RFC 1918 space
-	- Name: `<fqdn>_priv`, or `<fqnd>_privNN` if more than one `_priv` will be needed for that same FQDN
+	- Name: `<fqdn>_priv`, or `<fqdn>_privNN` if more than one `_priv` will be needed for that same FQDN
 - For a /32 outside of the RFC 1918 space
-	- Name: `<fqdn>_pub` or `<fqnd>_NN` if more than one `_priv` will be needed for that same FQDN
+	- Name: `<fqdn>_pub` or `<fqdn>_pubNN` if more than one `_pub` will be needed for that same FQDN
 - For prefix shorter than /32
 	- Name: `<use-case>_subnet`, or `<use-case>_subnetNN` if more than one `_subnet` will be needed for that same use-case
 - Comments can be used for additional elaboration
